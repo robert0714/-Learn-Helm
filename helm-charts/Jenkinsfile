@@ -6,24 +6,18 @@ pipeline {
     stages {
         stage("Lint") {
             steps {
-                container("chart-testing") {
                     sh "ct lint"
-                }
             }
         }
         stage("Install & Test") {
             steps {
-                container("chart-testing") {
                     sh "ct install --upgrade"
-                }
             }
         }
         stage("Package Charts") {
             steps {
                 script {
-                    container("chart-testing") {
 			sh "helm package --dependency-update helm-charts/charts/*"
-                    }
                 }
             }
         }
